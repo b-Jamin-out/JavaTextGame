@@ -6,6 +6,10 @@ public class User {
     private int locationX;
     private int locationY;
     private int health;
+    private int totHealth;
+    private double xp;
+    private double xpGoal;
+    
 
     //Getters
     public String getName() {
@@ -26,6 +30,18 @@ public class User {
 
     public int getHealth() {
         return health;
+    }
+
+    public int getTotHealth() {
+        return totHealth;
+    }
+
+    public double getXp() {
+        return xp;
+    }
+
+    public double getXpGoal() {
+        return xpGoal;
     }
     
     //Setters
@@ -49,13 +65,28 @@ public class User {
         this.health = health;
     }
 
+    public void setTotHealth(int totHealth) {
+        this.totHealth = totHealth;
+    }
+
+    public void setXp(double xp) {
+        this.xp = xp;
+    }
+
+    public void setXpGoal(double xpGoal) {
+        this.xpGoal = xpGoal;
+    }
+
     //Constructors
-    public User(String name, int strength, int locationX, int locationY, int health) {
+    public User(String name, int strength, int locationX, int locationY, int health, double xp, double xpGoal, int totHealth) {
         this.name = name;
         this.strength = strength;
         this.locationX = locationX;
         this.locationY = locationY;
         this.health = health;
+        this.xp = xp;
+        this.xpGoal = xpGoal;
+        this.totHealth = totHealth;
     }
 
     public User() {
@@ -66,7 +97,8 @@ public class User {
     public String toString() {
         return name + // + 
         "\n" + strength + "STR" + // +
-        "\n" + health + "HP";
+        "\n" + health + "HP" + // +
+        "\n" + xp + "XP";
     }
     
 }

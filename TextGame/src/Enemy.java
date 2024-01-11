@@ -3,6 +3,7 @@ public class Enemy {
     private int health;
     private int strength;
     private String name;
+    private double xpValue;
 
     //Getters
     public int getHealth() {
@@ -15,6 +16,10 @@ public class Enemy {
 
     public String getName() {
         return name;
+    }
+
+    public double getXpValue() {
+        return xpValue;
     }
 
     //Setters
@@ -30,12 +35,18 @@ public class Enemy {
         this.name = name;
     }
 
-    public Enemy(int health, int strength, String name) {
+    public void setXpValue(int xpValue) {
+        this.xpValue = xpValue;
+    }
+    
+    //Constructors
+    public Enemy(int health, int strength, String name, double xpValue) {
         this.health = health;
         this.strength = strength;
         this.name = name;
+        this.xpValue = xpValue;
     }
-
+    
     public Enemy() {
     }
 

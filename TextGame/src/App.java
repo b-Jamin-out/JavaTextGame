@@ -12,15 +12,16 @@ public class App {
                 "\nTo the North is the town of Novender, where you can find a bustling economy with merchants all through the streets." + //
                 "\nIn the East is the forest, where goblins and wolves lurk." + //
                 "\nDown South is the Drylands, with high heat and not much food or animals survival there is tough." + //
-                "\nAnd finally to the West are the Heralds Hills, A place where many priests of this world undergo a testament of strength and \nwillpower. Only those who are qualified and strong enough are able to adventure there.\n");
-    }
+                "\nAnd finally to the West are the Heralds Hills, A place where many priests of this world undergo a testament of strength and \nwillpower. Only those who are qualified and strong enough are able to adventure there.\n" + // +
+                "Where will you travel to?\n");
+    }//End of krymnLocationMessage
 
     //places to travel to from Krymn
     public static void travelFromKrymn(String input, User user1){
         
         if (input.toLowerCase().contains("north")){
             user1.setLocationY(user1.getLocationY() + 1);
-            System.out.println("\nYou travel up North towards Novender. After about two hours you arrive at the city gates. The guards stop you on your way in.");
+            System.out.println("\nYou travel up North towards Novender. After about two hours you arrive at the city gates. The guards stop you \non your way in.");
         }
         else if (input.toLowerCase().contains("east")){
             user1.setLocationX(user1.getLocationX() + 1);
@@ -33,13 +34,15 @@ public class App {
         }
         else if (input.toLowerCase().contains("west")){
             user1.setLocationX(user1.getLocationX() - 1);
-            System.out.println("\nYou travel West, towrads the prooving grounds for priests-to-be. Upon your arrival to the top of the hill a guard stops you.");
+            System.out.println("\nYou travel West, towrads the prooving grounds for priests-to-be. Upon your arrival to the top of the hill a \nguard stops you.");
             if (user1.getStrength() < 20){
                 System.out.println(
             "\nGuard: Halt! You are not ready yet to try the Testament of Strength. Come back later, once you're stronger." + // + 
-            "\n You are forced to go back to Krymn.\n");
+            "\n\n You are forced to go back to Krymn.\n");
             user1.setLocationX(user1.getLocationX() + 1);
             }
+        } else {
+            System.out.println("\nPlease input a proper direction(North, South, East, West)\n");
         }
     }//End of travelFromKrymn
 
@@ -63,7 +66,8 @@ public class App {
             }
             //System.out.println(x);
             if (enemy1.getHealth() <= 0){
-                System.out.println("You defeated the " + enemy1.getName() + "!\n");
+                System.out.println("You defeated the " + enemy1.getName() + " and got " + enemy1.getXpValue() + "XP!\n");
+                user1.setXp(user1.getXp() + enemy1.getXpValue());
                 break;
             } else if (user1.getHealth() <= 0){
                 System.out.println("The " + enemy1.getName() + " killed you! Your adventure ends here.");
@@ -71,6 +75,78 @@ public class App {
             }
         }
     }//End of battleEnemy
+
+    //Detects for cardinal direction
+    public static void detectCardinalDirection(String input){
+        if (input.toLowerCase().contains("north") != true || input.toLowerCase().contains("east") != true || input.toLowerCase().contains("south") != true || input.toLowerCase().contains("west") != true){
+            System.out.println("\nPlease input a cardinal direction(North, South, East, West): \n");
+            input = keys.nextLine();
+        } else {
+            
+        }
+    }//End of detectCardinalDirection
+
+    //Novender Town Message
+    public static void novenderTownMessage(String input, User user1){
+            System.out.println("\nGuard: Halt! What is your reason for entering Novender? Are you an adventurer, merchant, or scholar?\n");
+            input = keys.nextLine();
+            //Detects user input
+            //Adventurer
+            if (input.toLowerCase().contains("adventurer")){
+                user1.setLocationY(user1.getLocationY() + 1);
+                System.out.println("\nGuard: Ah an adventurer. I used to do that, then I took an arrow to the knee. Well, seeing as you have no \nillegal items, you may enter.");
+            }
+            //Merchant 
+            else if (input.toLowerCase().contains("merchant")){
+                user1.setLocationY(user1.getLocationY() + 1);
+                System.out.println("\nGuard: Oh another merchant. Just what we need. Do you have any illegal items? Are you selling or buying in \ntown? You know what, whatever. The town's riddled with crime anyway. Go in.");
+            } 
+            //Scholar
+            else if (input.toLowerCase().contains("scholar")){
+                user1.setLocationY(user1.getLocationY() + 1);
+                System.out.println("\nGuard: Ah a scholar. Well, we don't have many libraries, but feel free to study what you can.");
+            }
+            //Random nonsense 
+            else {
+                System.out.println("\nGuard: What? Are you speaking some ancient language or something? Say something normal.");
+            }
+
+            //Novender navigation 
+            System.out.println("\nYou walk through the gates and start walking the streets. You notice an abundance of shops and restaurants \nthroughout the streets and you think you must be in the market distrct. Look closer at a shop or continue \nonward?");
+            input = keys.nextLine();
+    }//End of novenderTownsMessage
+    
+    //Sets parameters of enemy1
+    public static void setEnemyDeets(Enemy enemy1, String name, int health, int strength, int xpValue){
+        enemy1.setName(name);
+        enemy1.setHealth(health);
+        enemy1.setStrength(strength);
+        enemy1.setXpValue(xpValue);
+    }//End of setEnemyDeets
+
+    public static void levelUp(User user1, String input){
+        while (user1.getXp() >= user1.getXpGoal()){
+            System.out.println("\nYou leveled up! Would you like to increase strength or health?\n");
+            input = keys.nextLine();
+
+            //Upgrades strength
+            if (input.toLowerCase().contains("strength")){
+                user1.setStrength(user1.getStrength() + 1);
+                user1.setXp(user1.getXp() - user1.getXpGoal());;
+                user1.setXpGoal(user1.getXpGoal() * 1.5);
+            }
+            //Upgrades health
+             else if (input.toLowerCase().contains("health")){
+                user1.setTotHealth(user1.getTotHealth() + 2);
+                user1.setXp(user1.getXp() - user1.getXpGoal());;
+                user1.setXpGoal(user1.getXpGoal() * 1.5);
+            } else {
+                System.out.println("\nPlease enter a valid response: strength or health\n");
+                input = keys.nextLine();
+            }
+            user1.setHealth(user1.getTotHealth());
+        }
+    }
     public static void main(String[] args) throws Exception {
         //Variables
 
@@ -84,6 +160,9 @@ public class App {
         User user1 = new User();
         user1.setStrength(1);
         user1.setHealth(10);
+        user1.setXp(0.0);
+        user1.setXpGoal(10.0);
+        user1.setTotHealth(10);
 
         //Enemy
         Enemy enemy1 = new Enemy();
@@ -91,32 +170,68 @@ public class App {
         //Inputs
 
         //Welcome Message // setting name
-        System.out.println("Welcome! This is a text based adventure game that will take place in a medival fantasy world of spells and swords! Enter a name for your character and we will start on your journey!\n");
+        System.out.println("Welcome! This is a text based adventure game that will take place in a medival fantasy world of spells and \nswords! Enter a name for your character and we will start on your journey!\n");
         input = keyboard.nextLine();
         user1.setName(input);
 
         //Writes out locations from Krymn
         System.out.println("\nYour character " + user1.getName() + ", and your story, starts in a small village called Krymn." + // + 
-        "\n To the North is the town of Novender, where you can find a bustling economy with merchants all through the streets." + // + 
+        "\n To the North is the town of Novender, where you can find a bustling economy with merchants all through the \n streets." + // + 
         "\n In the East is the forest, where goblins and wolves lurk." + // + 
         "\n Down South is the Drylands, with high heat and not much food or animals survival there is tough." + // + 
-        "\n And finally to the West are the Heralds Hills, A place where many priests of this world undergo a testament of strength and \n willpower. Only those who are qualified and strong enough are able to adventure there.\n");
+        "\n And finally to the West are the Heralds Hills, A place where many priests of this world undergo a testament of strength and willpower. Only those who are qualified and strong enough are able to adventure there.\n" + // +
+        "Where will you travel to?\n");
         input = keyboard.nextLine();
+
+        //Detects if input doesnt contain a cardinal direction
+        //detectCardinalDirection(input);
 
         //Takes player from Krymn
         travelFromKrymn(input, user1);
         while (user1.getLocationX() == 0 && user1.getLocationY() == 0){
             krymnLocationMessage();
             input = keyboard.nextLine();
+            //detectCardinalDirection(input);
             travelFromKrymn(input, user1);
         }
 
-        if (user1.getLocationX() == 1 && user1.getLocationY() == 0){
-            System.out.println("\nAfter about 20 minutes of walking through the forest you encounter a goblin. He looks vicious and hungry. You must fight him to escape!");
-            enemy1.setName("Hungry Goblin");
-            enemy1.setHealth(5);
-            enemy1.setStrength(1);
+        //Forest Exploration
+        while (user1.getLocationX() == 1 && user1.getLocationY() == 0){
+
+            //First forest location
+            System.out.println("\nAfter about 20 minutes of walking through the forest you encounter a goblin. He looks vicious and hungry. You \nmust fight him to escape!");
+            setEnemyDeets(enemy1, "Hungry Goblin", 5, 1, 5);
             battleEnemy(input, user1, enemy1);
+            levelUp(user1, input);
+            System.out.println("\nYou can return to Krymn and rest up, but you might allow new enemies to come back to the trails. Do you want to continue through the forest or leave?\n");
+            input = keyboard.nextLine();
+
+            //Second forest location
+            if (input.toLowerCase().contains("continue")){
+                user1.setLocationX(user1.getLocationX() + 1);
+                System.out.println("\nYou continue to walk throught the rough trails of the forest, looking for anything that seems interesting or \nout of place. after nearly an hou of walking the trails of the forest you come upon a little cottage. Will you \nknock on the door, snoop around, or ignore it and continue walking the trails?\n");
+                input = keyboard.nextLine();
+            } 
+            //Leave forest
+            else if (input.toLowerCase().contains("leave")){
+                user1.setLocationX(user1.getLocationX() - 1);
+                System.out.println("You retrace your steps through the forest and find yourself at the spot where you entered the forest from. You cotinue walking and make it back to Krymn and rest up.");
+                user1.setHealth(user1.getTotHealth());
+                krymnLocationMessage();
+                input = keyboard.nextLine();
+                travelFromKrymn(input, user1);
+            }
+            //Invalid response 
+            else {
+                System.out.println("\nPlease enter a valid response: Continue the trails or leave the forest\n");
+                input = keyboard.nextLine();
+            }
+
+        }
+
+        //Novender Exploration
+        while (user1.getLocationX() == 0 && user1.getLocationY() == 1){
+            novenderTownMessage(input, user1);
         }
 
         //Func and Method calls
