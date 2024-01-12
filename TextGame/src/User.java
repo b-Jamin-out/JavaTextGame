@@ -9,6 +9,7 @@ public class User {
     private int totHealth;
     private double xp;
     private double xpGoal;
+    private int level;
     
 
     //Getters
@@ -42,6 +43,10 @@ public class User {
 
     public double getXpGoal() {
         return xpGoal;
+    }
+
+    public int getLevel() {
+        return level;
     }
     
     //Setters
@@ -77,8 +82,12 @@ public class User {
         this.xpGoal = xpGoal;
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     //Constructors
-    public User(String name, int strength, int locationX, int locationY, int health, double xp, double xpGoal, int totHealth) {
+    public User(String name, int strength, int locationX, int locationY, int health, double xp, double xpGoal, int totHealth, int level) {
         this.name = name;
         this.strength = strength;
         this.locationX = locationX;
@@ -87,6 +96,7 @@ public class User {
         this.xp = xp;
         this.xpGoal = xpGoal;
         this.totHealth = totHealth;
+        this.level = level;
     }
 
     public User() {
@@ -96,6 +106,7 @@ public class User {
     @Override
     public String toString() {
         return name + // + 
+        "\n" + level + "LVL" + // +
         "\n" + strength + "STR" + // +
         "\n" + health + "HP" + // +
         "\n" + xp + "XP";
