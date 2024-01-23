@@ -4,6 +4,8 @@ public class Enemy {
     private int strength;
     private String name;
     private double xpValue;
+    private int agi;
+    private int gold;
 
     //Getters
     public int getHealth() {
@@ -14,12 +16,20 @@ public class Enemy {
         return strength;
     }
 
+    public int getAgi() {
+        return agi;
+    }
+
     public String getName() {
         return name;
     }
 
     public double getXpValue() {
         return xpValue;
+    }
+
+    public int getGold() {
+        return gold;
     }
 
     //Setters
@@ -30,6 +40,10 @@ public class Enemy {
     public void setStrength(int strength) {
         this.strength = strength;
     }
+
+    public void setAgi(int agi) {
+        this.agi = agi;
+    }
     
     public void setName(String name) {
         this.name = name;
@@ -38,13 +52,19 @@ public class Enemy {
     public void setXpValue(int xpValue) {
         this.xpValue = xpValue;
     }
+
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
     
     //Constructors
-    public Enemy(int health, int strength, String name, double xpValue) {
+    public Enemy(int health, int strength, String name, double xpValue, int agi, int gold) {
         this.health = health;
         this.strength = strength;
         this.name = name;
         this.xpValue = xpValue;
+        this.agi = agi;
+        this.gold = gold;
     }
     
     public Enemy() {
@@ -54,6 +74,7 @@ public class Enemy {
     public String toString() {
         return name + // + 
         "\n" + strength + "STR" + // +
+        "\n" + agi + "AGI" + // +
         "\n" + health + "HP";
     }
     
