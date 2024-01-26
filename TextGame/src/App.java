@@ -96,8 +96,9 @@ public class App {
             // deafeated enemy
             if (enemy1.getHealth() <= 0 && enemy1.getHealth() > -499) {
                 System.out
-                        .println("You defeated the " + enemy1.getName() + " and got " + enemy1.getXpValue() + "XP!\n");
+                        .println("You defeated the " + enemy1.getName() + " and got " + enemy1.getXpValue() + "XP and " + enemy1.getGold() + " gold!\n");
                 user1.setXp(user1.getXp() + enemy1.getXpValue());
+                user1.setGold(user1.getGold() + enemy1.getGold());
                 break;
             }
             // Got defeated
@@ -105,9 +106,8 @@ public class App {
                 System.out.println("The " + enemy1.getName() + " killed you! Your adventure ends here.");
                 break;
             }
-            //Fled
-            else if (enemy1.getHealth() < -499){
-                
+            // Fled
+            else if (enemy1.getHealth() < -499) {
                 System.out.println(user1.getLocationX());
                 break;
             }
@@ -170,16 +170,53 @@ public class App {
             if (input.toLowerCase().contains("shop")) {
                 user1.setLocationY(user1.getLocationY() + 1);
                 System.out.println("You look closer at a shop and begin talking with the merchant\n");
-                System.out.println("\nMerchant: AHH! Interested in my wares are you?! Well, I'll tell you what I got and I'll tell it to ya straight. I got a healing potion. 5 points of health. What does that mean? I don't know, you look like you know though. \n3 gold! What else do I have, let's see here, I got this nifty glowstick. It's like a torch but better! It never burns out! Uhh 10 gold for that. I have a sack of 10 apples picked just this morning from the local orchird. 2 gold for each apple.\n\nYou hear the merchant ramble off a few more items but none of them seem of real importance.\n\nMerchant: So, what are ya buying? Or are you buying everything?! Oh that'd be great! Please buy everything. I want it all gone!\n");
+                System.out.println(
+                        "\nMerchant: AHH! Interested in my wares are you?! Well, I'll tell you what I got and I'll tell it to ya straight. I got a healing potion. 5 points of health. What does that mean? I don't know, you look like you know though. \n3 gold! What else do I have, let's see here, I got this nifty glowstick. It's like a torch but better! It never burns out! Uhh 10 gold for that. I have a sack of 10 apples picked just this morning from the local orchird. 2 gold for each apple.\n\nYou hear the merchant ramble off a few more items but none of them seem of real importance.\n\nMerchant: So, what are ya buying? Or are you buying everything?! Oh that'd be great! Please buy everything. I want it all gone!\n");
                 input = keys.nextLine();
 
-                //Nothing
-                if (input.toLowerCase().contains("nothing")){
-                    System.out.println("\nMerchant: Aww. I just want to sell my junk...\n\nYou continue onward through the streets of Novender ane make your way to the town square. Here you see a large \nchurch which seems to be a main stopping point for most people. You also see several roads continuing the path \nthrough the town");
+                // Nothing
+                if (input.toLowerCase().contains("nothing")) {
+                    System.out.println(
+                            "\nMerchant: Aww. I just want to sell my junk...\n\nYou continue onward through the streets of Novender ane make your way to the town square. Here you see a large \nchurch which seems to be a main stopping point for most people. You also see several roads continuing the path \nthrough the town");
                 }
-                else if (input.toLowerCase().contains("health potion")){
-                    System.out.println("\nMerchant: OOH! A good choice my fine sir. Here you go!");
+                //Health potion 
+                else if (input.toLowerCase().contains("health potion")) {
+                    if (user1.getGold() < 3){
+                        System.out.println("\nMerchant: Oh, uhh, you don't seem to have enough gold. Back away broke bitch.\n\nThe merchant swats yo away from his stall.");
+                    } 
+                    else {
+                        System.out.println("\nMerchant: OOH! A good choice my fine sir. Here you go!\n\nYou gain one health potion.");
+                        user1.setGold(user1.getGold() - 3);
+                    }
                 }
+                //Glowstick
+                else if (input.toLowerCase().contains("glowstick")){
+                    if (user1.getGold() < 10){
+                        System.out.println("\nMerchant: Oh, uhh, you don't seem to have enough gold. Back away broke bitch.\n\nThe merchant swats yo away from his stall.");
+                    }
+                    else {
+                        System.out.println("\nMerchant: Ahh! Well then here ya go!\n\nYou gain one 'Glowstick'");
+                        user1.setGold(user1.getGold() - 10);
+                    }
+                }
+                //Apples
+                else if (input.toLowerCase().contains("apple")){
+                    int a = 0;
+                    System.out.println("\nMerchant: Ahh! How many apples?\n");
+                    a = keys.nextInt();
+
+                    while (a > 10){
+                        System.out.println("\nMerchant: Try again. I only have 10 apples\n");
+                        a = keys.nextInt();
+                    }
+
+                    if (user1.getGold() < (a * 3)){
+                        System.out.println("\nMerchant: YOU DONT HAVE ENOUGH! GET OOUUTT!!!");
+                    } else {
+                        System.out.println("\nMerchant: Alright! Here you go!\n\nYou got " + a + " apples");
+                    }
+                }
+                System.out.println("");
             }
             // Continue
             else if (input.toLowerCase().contains("continue")) {
@@ -197,7 +234,8 @@ public class App {
     }// End of novenderTownsMessage
 
     // Sets parameters of enemy1
-    public static void setEnemyDeets(Enemy enemy1, String name, int health, int strength, int xpValue, int agi, int gold) {
+    public static void setEnemyDeets(Enemy enemy1, String name, int health, int strength, int xpValue, int agi,
+            int gold) {
         enemy1.setName(name);
         enemy1.setHealth(health);
         enemy1.setStrength(strength);
@@ -299,6 +337,9 @@ public class App {
         }
         if (user1.getName().toLowerCase().contains("xoc")) {
             user1.setXp(76.25);
+        }
+        if (user1.getName().toLowerCase().contains("zoc")) {
+            user1.setGold(100);
         }
 
         // Forest Exploration
